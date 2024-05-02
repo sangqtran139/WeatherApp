@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.sangtq.buildlogic"
+group = "com.weather.buildlogic"
 
 // Configure the build-logic plugins to target JDK 17
 // This matches the JDK used to build the project, and is not related to what is running on device.
@@ -21,12 +21,9 @@ tasks.withType<KotlinCompile>().configureEach {
 dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.android.tools.common)
-    compileOnly(libs.firebase.crashlytics.gradlePlugin)
-    compileOnly(libs.firebase.performance.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
-    implementation(libs.truth)
 }
 
 tasks {
@@ -39,59 +36,59 @@ tasks {
 gradlePlugin {
     plugins {
         register("androidApplicationCompose") {
-            id = "sangtq.android.application.compose"
+            id = "weather.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
         register("androidApplication") {
-            id = "sangtq.android.application"
+            id = "weather.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidApplicationJacoco") {
-            id = "sangtq.android.application.jacoco"
+            id = "weather.android.application.jacoco"
             implementationClass = "AndroidApplicationJacocoConventionPlugin"
         }
         register("androidLibraryCompose") {
-            id = "sangtq.android.library.compose"
+            id = "weather.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
         register("androidLibrary") {
-            id = "sangtq.android.library"
+            id = "weather.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidFeature") {
-            id = "sangtq.android.feature"
+            id = "weather.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
         register("androidLibraryJacoco") {
-            id = "sangtq.android.library.jacoco"
+            id = "weather.android.library.jacoco"
             implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
         register("androidTest") {
-            id = "sangtq.android.test"
+            id = "weather.android.test"
             implementationClass = "AndroidTestConventionPlugin"
         }
         register("androidHilt") {
-            id = "sangtq.android.hilt"
+            id = "weather.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
         register("androidRoom") {
-            id = "sangtq.android.room"
+            id = "weather.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
         register("androidFirebase") {
-            id = "sangtq.android.application.firebase"
+            id = "weather.android.application.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
         register("androidFlavors") {
-            id = "sangtq.android.application.flavors"
+            id = "weather.android.application.flavors"
             implementationClass = "AndroidApplicationFlavorsConventionPlugin"
         }
         register("androidLint") {
-            id = "sangtq.android.lint"
+            id = "weather.android.lint"
             implementationClass = "AndroidLintConventionPlugin"
         }
         register("jvmLibrary") {
-            id = "sangtq.jvm.library"
+            id = "weather.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
     }

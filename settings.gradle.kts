@@ -26,4 +26,4 @@ include(":core")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":core:designsystem")
-include(":core:ui")
+include(":core:model")

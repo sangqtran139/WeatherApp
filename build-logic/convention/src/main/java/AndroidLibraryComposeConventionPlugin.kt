@@ -1,5 +1,4 @@
 import com.android.build.gradle.LibraryExtension
-import com.sangtq.convention.configureAndroidCompose
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
