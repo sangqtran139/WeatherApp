@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.weather.android.application)
     alias(libs.plugins.weather.android.application.compose)
-    alias(libs.plugins.weather.android.hilt)
 }
 
 android {
-    namespace = "com.weather"
+    namespace = "com.sangtq.weather"
 
     defaultConfig {
-        applicationId = "com.weather"
+        applicationId = "com.sangtq.weather"
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
     }
@@ -35,11 +34,4 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.designsystem)
-    implementation(projects.core.model)
-
-// Compose
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
 }

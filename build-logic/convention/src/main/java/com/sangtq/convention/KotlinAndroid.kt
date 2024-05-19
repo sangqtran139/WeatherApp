@@ -1,7 +1,6 @@
-package vendor.hyndai.app.vehiclemaintenance.buildlogic.convention
+package com.sangtq.convention
 
 import com.android.build.api.dsl.CommonExtension
-import com.sangtq.convention.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -25,9 +24,7 @@ internal fun Project.configureKotlinAndroid(
             targetCompatibility = JavaVersion.VERSION_17
         }
     }
-
-    configureKotlin()
-
+    configureKotlinJvm()
 }
 
 internal fun Project.configureKotlinJvm() {

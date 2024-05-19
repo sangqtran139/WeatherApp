@@ -21,7 +21,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
-import vendor.hyndai.app.vehiclemaintenance.buildlogic.convention.configureKotlinAndroid
+import com.sangtq.convention.configureKotlinAndroid
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {

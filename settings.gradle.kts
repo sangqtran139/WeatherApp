@@ -27,3 +27,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":core:designsystem")
 include(":core:model")
+include(":core:data")
+include(":core:network")
+include(":core:domain")
