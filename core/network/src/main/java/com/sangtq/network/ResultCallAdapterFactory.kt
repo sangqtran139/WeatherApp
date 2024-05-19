@@ -8,6 +8,7 @@ import retrofit2.*
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
+@Suppress("UNCHECKED_CAST")
 class ResultCallAdapterFactory : CallAdapter.Factory() {
 
     override fun get(
