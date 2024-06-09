@@ -15,7 +15,7 @@ data class Day(
     val maxtemp_f: Double,
     val maxwind_kph: Double,
     val maxwind_mph: Double,
-    val mintemp_c: Int,
+    val mintemp_c: Double,
     val mintemp_f: Double,
     val totalprecip_in: Double,
     val totalprecip_mm: Double,

@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="description_precipitation">Precipitation is the fall of water in either liquid or frozen form from the atmosphere to the earth\'s surface</string>
+    <string name="description_windy">Wind speed is a unit that measures the speed of air flow from high pressure to low pressure.</string>
+    <string name="description_uv">The UV index is a number without units to explain the level of exposure to ultraviolet radiation that is related to human health.
+        \n\nUV Index 0-2 = Low (low danger)
+        \nUV Index 3-5 = moderate (medium danger)
+        \nUV Index 6-7 = High (high danger)
+        \nUV Index 8-10 = Very High (very high danger)
+        \nUV Index >11 = Extreme (very dangerous)</string>
+    <string name="description_humidity">Humidity is the level of air wetness (the amount of water contained in the air) expressed as a percentage relative to the saturation point.</string>
 </resources>

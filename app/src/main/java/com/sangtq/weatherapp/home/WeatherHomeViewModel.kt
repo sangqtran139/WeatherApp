@@ -26,8 +26,15 @@ class WeatherHomeViewModel @Inject constructor(private val forecastWeatherUseCas
                 _weatherHomeUiState.value = Resource.Success(it)
             },
             onFailure = {
-                _weatherHomeUiState.value = Resource.Error("Unknown Error", it)
+                _weatherHomeUiState.value = Resource.Error(it.message ?: "Unknown Error", it)
             }
         )
     }
+}
+
+enum class NoteDetailWeather {
+    PRECIPITATION,
+    WINDY,
+    HUMIDITY,
+    INDEX_UV
 }
