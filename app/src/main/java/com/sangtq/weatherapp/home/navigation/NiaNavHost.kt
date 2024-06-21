@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.sangtq.weatherapp.NiaAppState
+import com.sangtq.weatherdetail.navigation.navigateWeatherDetail
+import com.sangtq.weatherdetail.navigation.weatherDetailScreen
 
 @Composable
 fun NiaNavHost(
@@ -18,6 +20,11 @@ fun NiaNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        weatherHomeScreen()
+        weatherHomeScreen(openWeatherDetail = {
+            navController.navigateWeatherDetail()
+        })
+        weatherDetailScreen(onClickBack = {
+            navController.navigateUp()
+        })
     }
 }

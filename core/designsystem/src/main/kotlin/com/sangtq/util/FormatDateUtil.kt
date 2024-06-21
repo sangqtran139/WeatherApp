@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -41,6 +42,17 @@ fun convertEpochToHour(epoch: Long): Int {
         LocalDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.systemDefault())
     return localDateTime.hour
 }
+
+fun getCurrentTime(): String {
+    val calendar = Calendar.getInstance()
+    val currentTime = calendar.time
+
+    val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val formattedTime = dateFormat.format(currentTime)
+
+    return formattedTime
+}
+
 
 fun convertToCamelCase(input: String): String {
     val words = input.lowercase(Locale.ROOT).split("_")

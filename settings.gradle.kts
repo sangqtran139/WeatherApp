@@ -30,3 +30,5 @@ include(":core:model")
 include(":core:data")
 include(":core:network")
 include(":core:domain")
+
+include(":feature:weatherdetail")

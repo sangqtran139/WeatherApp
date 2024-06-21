@@ -34,4 +34,5 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.weatherdetail)
 }

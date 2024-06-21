@@ -1,4 +1,4 @@
-package com.sangtq.weatherapp.home
+package com.sangtq.weatherdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,23 +11,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WeatherHomeViewModel @Inject constructor(
+class WeatherDetailViewModel @Inject constructor(
     private val forecastWeatherUseCase: ForecastWeatherUseCase
 ) : ViewModel() {
-    private val _weatherHomeUiState = MutableStateFlow<Resource<Any>?>(null)
-    val forecastWeatherUiState: StateFlow<Resource<Any>?> = _weatherHomeUiState
+    private val _weatherDetailUiState = MutableStateFlow<Resource<Any>?>(null)
+    val weatherDetailUiState: StateFlow<Resource<Any>?> = _weatherDetailUiState
 
-    fun getForecastWeather() = viewModelScope.launch {
-        _weatherHomeUiState.value = Resource.Loading()
+    fun getWeatherDetail() = viewModelScope.launch {
+        _weatherDetailUiState.value = Resource.Loading()
 
         val result = forecastWeatherUseCase.getForecastWeather("VietNam", 3, "", "")
 
         result.fold(
             onSuccess = {
-                _weatherHomeUiState.value = Resource.Success(it)
+                _weatherDetailUiState.value = Resource.Success(it)
             },
             onFailure = {
-                _weatherHomeUiState.value = Resource.Error(it.message ?: "Unknown Error", it)
+                _weatherDetailUiState.value = Resource.Error(it.message ?: "Unknown Error", it)
             }
         )
     }

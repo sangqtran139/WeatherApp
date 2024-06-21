@@ -1,10 +1,6 @@
-package com.sangtq.weatherapp.home
+package com.sangtq.weatherdetail
 
 import android.widget.Toast
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,15 +19,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,12 +37,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -56,7 +49,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,16 +64,16 @@ import com.sangtq.util.convertEpochToHour
 import com.sangtq.util.convertEpochToLocalDate
 import com.sangtq.util.convertToCamelCase
 import com.sangtq.util.getCurrentTime
+import com.weather.core.designsystem.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Unit)? = null) {
-    val viewModel: WeatherHomeViewModel = hiltViewModel()
+fun WeatherDetailRoute(modifier: Modifier = Modifier, onClickBack: (() -> Unit)? = null) {
+    val viewModel: WeatherDetailViewModel = hiltViewModel()
 
-    val forecastWeatherState = viewModel.forecastWeatherUiState.collectAsStateWithLifecycle()
+    val forecastWeatherState = viewModel.weatherDetailUiState.collectAsStateWithLifecycle()
 
     var weatherHomeSate by remember {
         mutableStateOf(ForecastWeatherDto())
@@ -150,7 +142,7 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
     }
 
     LaunchedEffect(key1 = true) {
-        viewModel.getForecastWeather()
+        viewModel.getWeatherDetail()
     }
 
     LaunchedEffect(key1 = weatherHomeSate) {
@@ -167,46 +159,71 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
 
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
-            .background(Color(0xFFF2F2F2)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+            .background(Color(0xFFF2F2F2))
     ) {
-        LazyColumn(
-            contentPadding = PaddingValues(top = 36.dp, start = 12.dp, end = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item {
+        Box {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(450.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = backgroundWeatherDayAndNight,
+                        )
+                    )
+            )
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color.White)
-                        .clickable {
-                        }
-                        .padding(horizontal = 20.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.padding(top = 40.dp, start = 16.dp, end = 16.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_map_marker),
-                        contentDescription = null
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                onClickBack?.invoke()
+                            },
+                        painter = painterResource(id = R.drawable.ic_arrow_left),
+                        contentDescription = null,
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "${weatherHomeSate.location?.name}, ${weatherHomeSate.location?.country}",
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight(500)
-                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(end = 44.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(Color.White)
+                                .clickable {
+                                }
+                                .padding(horizontal = 20.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_map_marker),
+                                contentDescription = null
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "${weatherHomeSate.location?.name}, ${weatherHomeSate.location?.country}",
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight(500)
+                            )
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Column(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = backgroundWeatherDayAndNight,
-                            )
-                        )
                         .padding(start = 24.dp, bottom = 44.dp)
                 ) {
                     Spacer(modifier = Modifier.height(36.dp))
@@ -230,18 +247,14 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
                         weatherForecast = weatherHomeSate
                     )
                 }
-                Column(
+                if (weatherHomeSate.forecast?.forecastday?.firstOrNull() == null) return
+                if (weatherHomeSate.forecast?.forecastday?.first()!!.hour.isNullOrEmpty()) return
+                Box(
                     modifier = Modifier
-                        .clip(
-                            RoundedCornerShape(
-                                bottomStart = 20.dp, bottomEnd = 20.dp
-                            )
-                        )
-                        .background(Color.White)
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .background(Color.White, RoundedCornerShape(12.dp))
                 ) {
-                    if (weatherHomeSate.forecast?.forecastday?.firstOrNull() == null) return@item
-                    if (weatherHomeSate.forecast?.forecastday?.first()!!.hour.isNullOrEmpty()) return@item
-
                     HourWeatherLazyList(
                         modifier = Modifier, contentPaddingValues = PaddingValues(
                             start = 12.dp, top = 8.dp, bottom = 14.dp, end = 12.dp
@@ -253,36 +266,27 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
                             hourNow.intValue = convertEpochToHour(it.time_epoch)
                         }
                     )
-                    HorizontalDivider(thickness = 1.dp, color = Color(0xFFE0E0E0))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                openWeatherDetail?.invoke()
-                            },
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(vertical = 18.dp),
-                            text = "Read more",
-                            fontSize = 14.sp,
-                            color = Color(0xFF2F80ED),
-                            fontWeight = FontWeight(500)
-                        )
-                        Image(
-                            painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_arrow),
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
-                    }
                 }
-            }
-            forecastWeatherLazyList(
-                forecastDay = weatherHomeSate.forecast?.forecastday
-            ) { tips ->
-                contentNoteBottomSheet.value = tips
-                showBottomSheet = true
+                if (weatherHomeSate.forecast?.forecastday == null) return
+                DetailWeather(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .background(Color.White, RoundedCornerShape(12.dp))
+                        .padding(top = 20.dp, start = 24.dp, end = 24.dp, bottom = 24.dp),
+                    forecastDay = weatherHomeSate.forecast?.forecastday!!.firstOrNull(),
+                    onClickTips = { tips ->
+                        contentNoteBottomSheet.value = tips
+                        showBottomSheet = true
+                    }
+                )
+                SunDetailInformation(
+                    modifier = Modifier
+                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                        .fillMaxWidth()
+                        .background(Color.White, RoundedCornerShape(12.dp))
+                        .padding(top = 20.dp, start = 24.dp, end = 24.dp, bottom = 24.dp),
+                    forecastDay = weatherHomeSate.forecast?.forecastday!!.firstOrNull(),
+                )
             }
         }
     }
@@ -302,19 +306,19 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
                         painter = painterResource(
                             id = when (contentNoteBottomSheet.value) {
                                 NoteDetailWeather.PRECIPITATION.name -> {
-                                    com.weather.core.designsystem.R.drawable.ic_water_percent
+                                    R.drawable.ic_water_percent
                                 }
 
                                 NoteDetailWeather.WINDY.name -> {
-                                    com.weather.core.designsystem.R.drawable.ic_weather_windy
+                                    R.drawable.ic_weather_windy
                                 }
 
                                 NoteDetailWeather.HUMIDITY.name -> {
-                                    com.weather.core.designsystem.R.drawable.ic_water_with_percent
+                                    R.drawable.ic_water_with_percent
                                 }
 
                                 else -> {
-                                    com.weather.core.designsystem.R.drawable.ic_white_balance_sunny
+                                    R.drawable.ic_white_balance_sunny
                                 }
                             }
                         ), contentScale = ContentScale.Fit, contentDescription = null
@@ -334,19 +338,19 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
                     text = stringResource(
                         id = when (contentNoteBottomSheet.value) {
                             NoteDetailWeather.PRECIPITATION.name -> {
-                                com.weather.core.designsystem.R.string.description_precipitation
+                                R.string.description_precipitation
                             }
 
                             NoteDetailWeather.WINDY.name -> {
-                                com.weather.core.designsystem.R.string.description_windy
+                                R.string.description_windy
                             }
 
                             NoteDetailWeather.HUMIDITY.name -> {
-                                com.weather.core.designsystem.R.string.description_humidity
+                                R.string.description_humidity
                             }
 
                             else -> {
-                                com.weather.core.designsystem.R.string.description_uv
+                                R.string.description_uv
                             }
                         }
                     ),
@@ -395,7 +399,7 @@ fun DetailWeatherToday(
             verticalArrangement = Arrangement.Top
         ) {
             Image(
-                painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_weather_heavy_rain),
+                painter = painterResource(id = R.drawable.ic_weather_heavy_rain),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.height(25.dp))
@@ -459,7 +463,7 @@ fun HourlyWeatherItem(modifier: Modifier = Modifier, hour: Hour) {
         )
         Spacer(modifier = Modifier.height(4.dp))
         Image(
-            painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_weather_heavy_rain),
+            painter = painterResource(id = R.drawable.ic_weather_heavy_rain),
             contentDescription = null,
             modifier = Modifier
                 .padding(horizontal = 13.dp)
@@ -476,140 +480,94 @@ fun HourlyWeatherItem(modifier: Modifier = Modifier, hour: Hour) {
     }
 }
 
-fun LazyListScope.forecastWeatherLazyList(
-    forecastDay: List<Forecastday>?,
+@Composable
+fun DetailWeather(
+    modifier: Modifier = Modifier,
+    forecastDay: Forecastday?,
     onClickTips: (String) -> Unit
 ) {
-    if (forecastDay.isNullOrEmpty()) return
-    item {
-        Spacer(modifier = Modifier.height(16.dp))
+    if (forecastDay == null) return
+    Column(
+        modifier = modifier
+    ) {
         Text(
-            modifier = Modifier
-                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                .background(Color.White)
-                .fillMaxWidth()
-                .padding(top = 20.dp, start = 24.dp, end = 24.dp),
-            text = "Weather for the next ${forecastDay.size} days",
-            color = Color(0xFF333333),
+            text = "Detail",
+            color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight(600)
         )
-    }
-    items(forecastDay.size) {
-        WeatherForecastItem(
+        Spacer(modifier = Modifier.height(20.dp))
+        DetailWeatherForecastForDay(
             modifier = Modifier
-                .background(Color.White)
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMediumLow
-                    )
-                ),
-            forecastDay = forecastDay[it],
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFFE0E0E0),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .fillMaxWidth()
+                .padding(all = 16.dp),
+            forecastDay = forecastDay,
             onClickTips = onClickTips
         )
-    }
-    item {
-        Text(
-            modifier = Modifier
-                .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp))
-                .background(color = Color.White)
-                .fillMaxWidth()
-                .padding(top = 6.dp, bottom = 14.dp, start = 24.dp, end = 24.dp),
-            text = "Developed by SangTran",
-            color = Color(0xFF828282),
-            fontSize = 10.sp,
-            fontWeight = FontWeight(600)
-        )
-        Spacer(modifier = Modifier.height(70.dp))
-    }
-}
-
-@Composable
-fun WeatherForecastItem(
-    modifier: Modifier = Modifier,
-    forecastDay: Forecastday,
-    onClickTips: (String) -> Unit
-) {
-    val isExpandDetailWeather = remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-    val animateRotation = remember { Animatable(0f) }
-    Column(modifier = modifier
-        .clickable {
-            isExpandDetailWeather.value = !isExpandDetailWeather.value
-            coroutineScope.launch {
-                animateRotation.animateTo(
-                    if (isExpandDetailWeather.value) {
-                        180f
-                    } else {
-                        0f
-                    }
-                )
-            }
-        }) {
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(22.dp))
         Row(
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 24.dp, end = 10.dp)
-            ) {
-                Text(
-                    text = convertEpochToLocalDate(forecastDay.date_epoch),
-                    color = Color(0xFF333333),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(450),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "Afternoon ${forecastDay.day.maxtemp_c.roundToInt()}° C, Night ${forecastDay.day.mintemp_c.roundToInt()}° C",
-                    color = Color(0xFF828282),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(450),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
             Image(
-                painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_weather_heavy_rain),
-                contentDescription = null,
-                modifier = Modifier
-                    .width(32.dp)
-                    .height(38.dp)
+                painter = painterResource(id = R.drawable.ic_weather_icon_sun),
+                contentDescription = null
             )
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(6.dp))
+            Text(
+                text = "Afternoon",
+                color = Color.Black,
+                fontSize = 14.sp,
+                fontWeight = FontWeight(600)
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text =
+            stringResource(
+                id = R.string.detail_weather_afternoon,
+                forecastDay.day.maxtemp_c,
+                forecastDay.day.daily_chance_of_rain,
+                forecastDay.day.totalprecip_mm,
+                forecastDay.day.maxwind_kph,
+                forecastDay.day.maxwind_mph
+            ),
+            color = Color(0xFF828282),
+            fontSize = 14.sp,
+            fontWeight = FontWeight(400)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
-                painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_drop_down),
-                contentDescription = null,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .rotate(animateRotation.value)
-                    .padding(6.dp)
+                painter = painterResource(id = R.drawable.ic_weather_icon_moon),
+                contentDescription = null
             )
-            Spacer(modifier = Modifier.width(18.dp))
-        }
-        if (isExpandDetailWeather.value) {
-            DetailWeatherForecastForDay(
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 20.dp)
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xFFE0E0E0),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .fillMaxWidth()
-                    .padding(all = 16.dp),
-                forecastDay = forecastDay,
-                onClickTips = onClickTips
+            Spacer(modifier = Modifier.width(6.dp))
+            Text(
+                text = "Night",
+                color = Color.Black,
+                fontSize = 14.sp,
+                fontWeight = FontWeight(600)
             )
-        } else {
-            Spacer(modifier = Modifier.height(12.dp))
         }
-        HorizontalDivider(thickness = 1.dp, color = Color(0xFFE0E0E0))
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text =
+            stringResource(
+                id = R.string.detail_weather_night,
+                forecastDay.day.daily_chance_of_rain,
+                forecastDay.day.mintemp_c
+            ),
+            color = Color(0xFF828282),
+            fontSize = 14.sp,
+            fontWeight = FontWeight(400)
+        )
     }
 }
 
@@ -624,7 +582,7 @@ fun DetailWeatherForecastForDay(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_water_percent),
+                        painter = painterResource(id = R.drawable.ic_water_percent),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -639,7 +597,7 @@ fun DetailWeatherForecastForDay(
                                 onClickTips.invoke(NoteDetailWeather.PRECIPITATION.name)
                             }
                             .padding(6.dp),
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_help_circle_outline),
+                        painter = painterResource(id = R.drawable.ic_help_circle_outline),
                         contentDescription = null,
                     )
                 }
@@ -653,7 +611,7 @@ fun DetailWeatherForecastForDay(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_weather_windy),
+                        painter = painterResource(id = R.drawable.ic_weather_windy),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -668,7 +626,7 @@ fun DetailWeatherForecastForDay(
                                 onClickTips.invoke(NoteDetailWeather.WINDY.name)
                             }
                             .padding(6.dp),
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_help_circle_outline),
+                        painter = painterResource(id = R.drawable.ic_help_circle_outline),
                         contentDescription = null
                     )
                 }
@@ -686,7 +644,7 @@ fun DetailWeatherForecastForDay(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_water_with_percent),
+                        painter = painterResource(id = R.drawable.ic_water_with_percent),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -701,7 +659,7 @@ fun DetailWeatherForecastForDay(
                                 onClickTips.invoke(NoteDetailWeather.HUMIDITY.name)
                             }
                             .padding(6.dp),
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_help_circle_outline),
+                        painter = painterResource(id = R.drawable.ic_help_circle_outline),
                         contentDescription = null
                     )
                 }
@@ -715,7 +673,7 @@ fun DetailWeatherForecastForDay(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_white_balance_sunny),
+                        painter = painterResource(id = R.drawable.ic_white_balance_sunny),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -730,7 +688,7 @@ fun DetailWeatherForecastForDay(
                                 onClickTips.invoke(NoteDetailWeather.INDEX_UV.name)
                             }
                             .padding(6.dp),
-                        painter = painterResource(id = com.weather.core.designsystem.R.drawable.ic_help_circle_outline),
+                        painter = painterResource(id = R.drawable.ic_help_circle_outline),
                         contentDescription = null,
                     )
                 }
@@ -745,12 +703,34 @@ fun DetailWeatherForecastForDay(
     }
 }
 
+@Composable
+fun SunDetailInformation(modifier: Modifier = Modifier, forecastDay: Forecastday?) {
+    if (forecastDay == null) return
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = "Sunrise & Sunset",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight(600)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "${forecastDay.astro.sunrise} ${forecastDay.astro.sunset}",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight(600)
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun WeatherHomeRoutePreview() {
     WeatherAppTheme {
         Surface {
-            WeatherHomeRoute()
+            WeatherDetailRoute()
         }
     }
 }

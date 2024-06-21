@@ -9,4 +9,6 @@
         \nUV Index 8-10 = Very High (very high danger)
         \nUV Index >11 = Extreme (very dangerous)</string>
     <string name="description_humidity">Humidity is the level of air wetness (the amount of water contained in the air) expressed as a percentage relative to the saturation point.</string>
+    <string name="detail_weather_afternoon">Maximum temperature of %.1f°C and a %d%% chance of rain with total rainfall of %.1f mm. Wind speeds up to %.1f km/h (%.1f km/h).</string>
+    <string name="detail_weather_night">Cloudy with a %d%% chance of precipitation wind variables. The overnight low will be %.1f°C</string>
 </resources>

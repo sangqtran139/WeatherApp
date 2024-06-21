@@ -8,12 +8,15 @@ import com.sangtq.weatherapp.home.WeatherHomeRoute
 
 const val WEATHER_HOME_ROUTE = "weather_home_route"
 
-fun NavController.navigateWeatherHome(navOptions: NavOptions? = null)
-    = navigate(WEATHER_HOME_ROUTE, navOptions)
+fun NavController.navigateWeatherHome(navOptions: NavOptions? = null) =
+    navigate(WEATHER_HOME_ROUTE, navOptions)
 
 fun NavGraphBuilder.weatherHomeScreen(
+    openWeatherDetail: (() -> Unit)? = null
 ) {
     composable(route = WEATHER_HOME_ROUTE) {
-        WeatherHomeRoute()
+        WeatherHomeRoute(openWeatherDetail = openWeatherDetail)
     }
 }
+
+
