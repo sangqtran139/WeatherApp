@@ -60,12 +60,15 @@ import com.sangtq.model.forecast.Forecastday
 import com.sangtq.model.forecast.Hour
 import com.sangtq.theme.WeatherAppTheme
 import com.sangtq.ui.AnimatedShimmer
+import com.sangtq.ui.SunriseSunsetView
 import com.sangtq.util.convertEpochToHour
 import com.sangtq.util.convertEpochToLocalDate
 import com.sangtq.util.convertToCamelCase
 import com.sangtq.util.getCurrentTime
 import com.weather.core.designsystem.R
 import kotlinx.coroutines.delay
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -286,6 +289,7 @@ fun WeatherDetailRoute(modifier: Modifier = Modifier, onClickBack: (() -> Unit)?
                         .background(Color.White, RoundedCornerShape(12.dp))
                         .padding(top = 20.dp, start = 24.dp, end = 24.dp, bottom = 24.dp),
                     forecastDay = weatherHomeSate.forecast?.forecastday!!.firstOrNull(),
+                    currentTime = currentTime.value
                 )
             }
         }
@@ -704,23 +708,89 @@ fun DetailWeatherForecastForDay(
 }
 
 @Composable
-fun SunDetailInformation(modifier: Modifier = Modifier, forecastDay: Forecastday?) {
+fun SunDetailInformation(
+    modifier: Modifier = Modifier,
+    forecastDay: Forecastday?,
+    currentTime: String
+) {
     if (forecastDay == null) return
     Column(
         modifier = modifier
     ) {
+        var isSun = true // else is moon
+        val hourNow = currentTime.substring(0, 2).toInt()
+        val minuteNow = currentTime.substring(3, 5).toInt()
+        var hourRise = forecastDay.astro.sunrise.substring(0, 2).toInt()
+        var minuteRise = forecastDay.astro.sunrise.substring(3, 5).toInt()
+        var hourSet = forecastDay.astro.sunset.substring(0, 2).toInt() + 12
+        var minuteSet = forecastDay.astro.sunset.substring(3, 5).toInt()
+
+        if ((hourNow < hourRise) ||
+            (hourNow == hourRise && minuteNow < minuteRise) ||
+            (hourNow > hourSet) ||
+            (hourNow == hourSet && minuteNow >= minuteSet)
+        ) {
+            isSun = false
+            hourRise = forecastDay.astro.moonrise.substring(0, 2).toInt()
+            minuteRise = forecastDay.astro.moonrise.substring(3, 5).toInt()
+            hourSet = forecastDay.astro.moonset.substring(0, 2).toInt() + 12
+            minuteSet = forecastDay.astro.moonset.substring(3, 5).toInt()
+        } else {
+            isSun = true
+            hourRise = forecastDay.astro.sunrise.substring(0, 2).toInt()
+            minuteRise = forecastDay.astro.sunrise.substring(3, 5).toInt()
+            hourSet = forecastDay.astro.sunset.substring(0, 2).toInt() + 12
+            minuteSet = forecastDay.astro.sunset.substring(3, 5).toInt()
+        }
+
         Text(
-            text = "Sunrise & Sunset",
+            text = if (isSun) "Sunrise & Sunset" else "Moonrise & Moonset",
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight(600)
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "${forecastDay.astro.sunrise} ${forecastDay.astro.sunset}",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight(600)
+        SunriseSunsetView(
+            currentTimeLong = Calendar.getInstance(Locale.getDefault()).apply {
+                set(Calendar.SECOND, 0)
+                set(Calendar.MINUTE, minuteNow)
+                set(
+                    Calendar.HOUR_OF_DAY,
+                    if (isSun) hourNow
+                    else if (hourNow <= 12)
+                        hourNow + 12
+                    else
+                        hourNow - 12
+                )
+            }.timeInMillis,
+            sunriseTimeLong = Calendar.getInstance(Locale.getDefault()).apply {
+                set(Calendar.SECOND, 0)
+                set(Calendar.MINUTE, minuteRise)
+                set(Calendar.HOUR_OF_DAY, hourRise)
+            }.timeInMillis,
+            sunsetTimeLong = Calendar.getInstance(Locale.getDefault()).apply {
+                set(Calendar.SECOND, 0)
+                set(Calendar.MINUTE, minuteSet)
+                set(Calendar.HOUR_OF_DAY, hourSet)
+            }.timeInMillis,
+            sunriseTextString = if (isSun) "Sunrise" else "Moonrise",
+            sunsetTextString = if (isSun) "Sunset" else "Moonset",
+            sunColorArray = if (isSun) {
+                arrayOf(
+                    0.3f to Color(0xFFF4CD39),
+                    0.4f to Color(0xFFF5D03C),
+                    0.9f to Color(0xFFF6D441),
+                    1f to Color(0xFFF6D542)
+                )
+            } else {
+                arrayOf(
+                    0.3f to Color(0xFF7478ED),
+                    0.4f to Color(0xFF7478ED),
+                    0.9f to Color(0xFF7478ED),
+                    1f to Color(0xFF7478ED)
+                )
+            },
+            isSun = isSun
         )
     }
 }
