@@ -4,7 +4,7 @@
             "outputFile": "com.sangtq.weather.app-mergeDebugResources-55:/values-lo/values-lo.xml",
             "map": [
                 {
-                    "source": "/Users/riskysang/.gradle/caches/transforms-4/580e36285be8d491f1cd36f01cf28214/transformed/core-1.13.0/res/values-lo/values-lo.xml",
+                    "source": "/Users/riskysang/.gradle/caches/transforms-4/26c17a182592f44822fa5a114d84b4b1/transformed/core-1.13.0/res/values-lo/values-lo.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/riskysang/.gradle/caches/transforms-4/96028c764889fed878dd24719b68ba56/transformed/material3-release/res/values-lo/values-lo.xml",
+                    "source": "/Users/riskysang/.gradle/caches/transforms-4/75817285f84ef149ad00f1b9c8304b39/transformed/material3-release/res/values-lo/values-lo.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/riskysang/.gradle/caches/transforms-4/3249bce89fbd94e3a81e8a0c0bb6517d/transformed/ui-release/res/values-lo/values-lo.xml",
+                    "source": "/Users/riskysang/.gradle/caches/transforms-4/1d992198e9bc56f8abbe42b4b9435123/transformed/ui-release/res/values-lo/values-lo.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "/Users/riskysang/.gradle/caches/transforms-4/99845dd2b9d6400b4e80f133ed37ec62/transformed/foundation-release/res/values-lo/values-lo.xml",
+                    "source": "/Users/riskysang/.gradle/caches/transforms-4/5c93ac7b47a0b101ef06701c2fedbacf/transformed/foundation-release/res/values-lo/values-lo.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

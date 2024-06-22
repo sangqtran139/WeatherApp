@@ -2,8 +2,8 @@ package com.sangtq.weatherapp;
 
 import com.sangtq.data.di.RepositoryModule;
 import com.sangtq.network.di.DataModule;
+import com.sangtq.searchlocation.WeatherDetailViewModel_HiltModules;
 import com.sangtq.weatherapp.home.WeatherHomeViewModel_HiltModules;
-import com.sangtq.weatherdetail.WeatherDetailViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -161,6 +161,7 @@ public final class WeatherApplication_HiltComponents {
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class,
           WeatherDetailViewModel_HiltModules.KeyModule.class,
+          com.sangtq.weatherdetail.WeatherDetailViewModel_HiltModules.KeyModule.class,
           WeatherHomeViewModel_HiltModules.KeyModule.class
       }
   )
@@ -199,6 +200,7 @@ public final class WeatherApplication_HiltComponents {
       modules = {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           WeatherDetailViewModel_HiltModules.BindsModule.class,
+          com.sangtq.weatherdetail.WeatherDetailViewModel_HiltModules.BindsModule.class,
           WeatherHomeViewModel_HiltModules.BindsModule.class
       }
   )

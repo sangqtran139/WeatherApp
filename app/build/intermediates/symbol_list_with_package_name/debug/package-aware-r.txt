@@ -92,9 +92,11 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_drop_down
 drawable ic_help_circle_outline
+drawable ic_launcher
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_map_marker
+drawable ic_sunny_color
 drawable ic_water_percent
 drawable ic_water_with_percent
 drawable ic_weather_heavy_rain

@@ -12,10 +12,10 @@ import com.sangtq.network.ApiService;
 import com.sangtq.network.di.DataModule_ProvideApiServiceFactory;
 import com.sangtq.network.di.DataModule_ProvideGsonConverterFactoryFactory;
 import com.sangtq.network.di.DataModule_ProvideHttpClientFactory;
+import com.sangtq.searchlocation.WeatherDetailViewModel;
+import com.sangtq.searchlocation.WeatherDetailViewModel_HiltModules;
 import com.sangtq.weatherapp.home.WeatherHomeViewModel;
 import com.sangtq.weatherapp.home.WeatherHomeViewModel_HiltModules;
-import com.sangtq.weatherdetail.WeatherDetailViewModel;
-import com.sangtq.weatherdetail.WeatherDetailViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
 import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
@@ -381,7 +381,7 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(2).put(LazyClassKeyProvider.com_sangtq_weatherdetail_WeatherDetailViewModel, WeatherDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_sangtq_weatherapp_home_WeatherHomeViewModel, WeatherHomeViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(3).put(LazyClassKeyProvider.com_sangtq_searchlocation_WeatherDetailViewModel, WeatherDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_sangtq_weatherdetail_WeatherDetailViewModel, com.sangtq.weatherdetail.WeatherDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_sangtq_weatherapp_home_WeatherHomeViewModel, WeatherHomeViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -401,15 +401,20 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_sangtq_weatherapp_home_WeatherHomeViewModel = "com.sangtq.weatherapp.home.WeatherHomeViewModel";
+      static String com_sangtq_searchlocation_WeatherDetailViewModel = "com.sangtq.searchlocation.WeatherDetailViewModel";
 
       static String com_sangtq_weatherdetail_WeatherDetailViewModel = "com.sangtq.weatherdetail.WeatherDetailViewModel";
 
-      @KeepFieldType
-      WeatherHomeViewModel com_sangtq_weatherapp_home_WeatherHomeViewModel2;
+      static String com_sangtq_weatherapp_home_WeatherHomeViewModel = "com.sangtq.weatherapp.home.WeatherHomeViewModel";
 
       @KeepFieldType
-      WeatherDetailViewModel com_sangtq_weatherdetail_WeatherDetailViewModel2;
+      WeatherDetailViewModel com_sangtq_searchlocation_WeatherDetailViewModel2;
+
+      @KeepFieldType
+      com.sangtq.weatherdetail.WeatherDetailViewModel com_sangtq_weatherdetail_WeatherDetailViewModel2;
+
+      @KeepFieldType
+      WeatherHomeViewModel com_sangtq_weatherapp_home_WeatherHomeViewModel2;
     }
   }
 
@@ -421,6 +426,8 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
     private final ViewModelCImpl viewModelCImpl = this;
 
     private Provider<WeatherDetailViewModel> weatherDetailViewModelProvider;
+
+    private Provider<com.sangtq.weatherdetail.WeatherDetailViewModel> weatherDetailViewModelProvider2;
 
     private Provider<WeatherHomeViewModel> weatherHomeViewModelProvider;
 
@@ -442,12 +449,13 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
       this.weatherDetailViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
-      this.weatherHomeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.weatherDetailViewModelProvider2 = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.weatherHomeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(2).put(LazyClassKeyProvider.com_sangtq_weatherdetail_WeatherDetailViewModel, ((Provider) weatherDetailViewModelProvider)).put(LazyClassKeyProvider.com_sangtq_weatherapp_home_WeatherHomeViewModel, ((Provider) weatherHomeViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(3).put(LazyClassKeyProvider.com_sangtq_searchlocation_WeatherDetailViewModel, ((Provider) weatherDetailViewModelProvider)).put(LazyClassKeyProvider.com_sangtq_weatherdetail_WeatherDetailViewModel, ((Provider) weatherDetailViewModelProvider2)).put(LazyClassKeyProvider.com_sangtq_weatherapp_home_WeatherHomeViewModel, ((Provider) weatherHomeViewModelProvider)).build());
     }
 
     @Override
@@ -457,15 +465,20 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_sangtq_weatherdetail_WeatherDetailViewModel = "com.sangtq.weatherdetail.WeatherDetailViewModel";
+
       static String com_sangtq_weatherapp_home_WeatherHomeViewModel = "com.sangtq.weatherapp.home.WeatherHomeViewModel";
 
-      static String com_sangtq_weatherdetail_WeatherDetailViewModel = "com.sangtq.weatherdetail.WeatherDetailViewModel";
+      static String com_sangtq_searchlocation_WeatherDetailViewModel = "com.sangtq.searchlocation.WeatherDetailViewModel";
+
+      @KeepFieldType
+      com.sangtq.weatherdetail.WeatherDetailViewModel com_sangtq_weatherdetail_WeatherDetailViewModel2;
 
       @KeepFieldType
       WeatherHomeViewModel com_sangtq_weatherapp_home_WeatherHomeViewModel2;
 
       @KeepFieldType
-      WeatherDetailViewModel com_sangtq_weatherdetail_WeatherDetailViewModel2;
+      WeatherDetailViewModel com_sangtq_searchlocation_WeatherDetailViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -489,10 +502,13 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
       @Override
       public T get() {
         switch (id) {
-          case 0: // com.sangtq.weatherdetail.WeatherDetailViewModel 
+          case 0: // com.sangtq.searchlocation.WeatherDetailViewModel 
           return (T) new WeatherDetailViewModel(viewModelCImpl.forecastWeatherUseCase());
 
-          case 1: // com.sangtq.weatherapp.home.WeatherHomeViewModel 
+          case 1: // com.sangtq.weatherdetail.WeatherDetailViewModel 
+          return (T) new com.sangtq.weatherdetail.WeatherDetailViewModel(viewModelCImpl.forecastWeatherUseCase());
+
+          case 2: // com.sangtq.weatherapp.home.WeatherHomeViewModel 
           return (T) new WeatherHomeViewModel(viewModelCImpl.forecastWeatherUseCase());
 
           default: throw new AssertionError(id);
@@ -594,7 +610,7 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectWeatherApplication(WeatherApplication weatherApplication) {
+    public void injectWeatherApplication(WeatherApplication arg0) {
     }
 
     @Override

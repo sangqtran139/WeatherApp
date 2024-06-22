@@ -35,4 +35,5 @@ android {
 
 dependencies {
     implementation(projects.feature.weatherdetail)
+    implementation(projects.feature.searchlocation)
 }

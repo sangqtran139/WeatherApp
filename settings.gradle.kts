@@ -32,3 +32,4 @@ include(":core:network")
 include(":core:domain")
 
 include(":feature:weatherdetail")
+include(":feature:searchlocation")

@@ -19,6 +19,8 @@ import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_andro
 import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_components_SingletonComponent;
 import hilt_aggregated_deps._com_sangtq_data_di_RepositoryModule;
 import hilt_aggregated_deps._com_sangtq_network_di_DataModule;
+import hilt_aggregated_deps._com_sangtq_searchlocation_WeatherDetailViewModel_HiltModules_BindsModule;
+import hilt_aggregated_deps._com_sangtq_searchlocation_WeatherDetailViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_sangtq_weatherapp_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._com_sangtq_weatherapp_WeatherApplication_GeneratedInjector;
 import hilt_aggregated_deps._com_sangtq_weatherapp_home_WeatherHomeViewModel_HiltModules_BindsModule;
@@ -67,6 +69,8 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
     aggregatedDeps = {
         _com_sangtq_data_di_RepositoryModule.class,
         _com_sangtq_network_di_DataModule.class,
+        _com_sangtq_searchlocation_WeatherDetailViewModel_HiltModules_BindsModule.class,
+        _com_sangtq_searchlocation_WeatherDetailViewModel_HiltModules_KeyModule.class,
         _com_sangtq_weatherapp_MainActivity_GeneratedInjector.class,
         _com_sangtq_weatherapp_WeatherApplication_GeneratedInjector.class,
         _com_sangtq_weatherapp_home_WeatherHomeViewModel_HiltModules_BindsModule.class,

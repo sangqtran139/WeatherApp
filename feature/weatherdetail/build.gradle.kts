@@ -21,7 +21,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sangtq.weatherdetail"
+    namespace = "com.sangtq.feature.weatherdetail"
 }
 
 dependencies {

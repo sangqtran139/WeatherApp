@@ -2,7 +2,7 @@
 converterMoshi = "2.9.0"
 gson = "2.10.1"
 loggingInterceptor = "4.12.0"
-minSdk = "26"
+minSdk = "33"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
 targetSdk = "34"
