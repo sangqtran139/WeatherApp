@@ -24,7 +24,7 @@ data class Hour(
     val temp_f: Double = 0.0,
     val time: String = "",
     val time_epoch: Long = 0,
-    val uv: Int = 0,
+    val uv: Float = 0f,
     val vis_km: Int = 0,
     val vis_miles: Int = 0,
     val will_it_rain: Int = 0,
