@@ -17,7 +17,7 @@ data class Current(
     val pressure_mb: Long,
     val temp_c: Double,
     val temp_f: Double,
-    val uv: Long,
+    val uv: Float,
     val vis_km: Long,
     val vis_miles: Long,
     val wind_degree: Long,

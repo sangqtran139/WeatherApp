@@ -5,8 +5,8 @@
     android:versionName="1.0.0" >
 
     <uses-sdk
-        android:minSdkVersion="26"
-        android:targetSdkVersion="26" />
+        android:minSdkVersion="31"
+        android:targetSdkVersion="31" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -28,6 +28,7 @@
         android:label="@string/app_name"
         android:roundIcon="@@drawable/ic_sunny_color"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/Theme.WeatherApp" >
         <activity
             android:name="com.sangtq.weatherapp.MainActivity"

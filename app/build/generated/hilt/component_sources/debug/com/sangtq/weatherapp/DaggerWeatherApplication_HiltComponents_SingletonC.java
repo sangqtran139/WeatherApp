@@ -401,20 +401,20 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_sangtq_weatherapp_home_WeatherHomeViewModel = "com.sangtq.weatherapp.home.WeatherHomeViewModel";
+
       static String com_sangtq_searchlocation_WeatherDetailViewModel = "com.sangtq.searchlocation.WeatherDetailViewModel";
 
       static String com_sangtq_weatherdetail_WeatherDetailViewModel = "com.sangtq.weatherdetail.WeatherDetailViewModel";
 
-      static String com_sangtq_weatherapp_home_WeatherHomeViewModel = "com.sangtq.weatherapp.home.WeatherHomeViewModel";
+      @KeepFieldType
+      WeatherHomeViewModel com_sangtq_weatherapp_home_WeatherHomeViewModel2;
 
       @KeepFieldType
       WeatherDetailViewModel com_sangtq_searchlocation_WeatherDetailViewModel2;
 
       @KeepFieldType
       com.sangtq.weatherdetail.WeatherDetailViewModel com_sangtq_weatherdetail_WeatherDetailViewModel2;
-
-      @KeepFieldType
-      WeatherHomeViewModel com_sangtq_weatherapp_home_WeatherHomeViewModel2;
     }
   }
 
@@ -610,7 +610,7 @@ public final class DaggerWeatherApplication_HiltComponents_SingletonC {
     }
 
     @Override
-    public void injectWeatherApplication(WeatherApplication arg0) {
+    public void injectWeatherApplication(WeatherApplication weatherApplication) {
     }
 
     @Override
