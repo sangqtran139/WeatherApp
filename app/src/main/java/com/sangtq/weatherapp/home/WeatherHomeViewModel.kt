@@ -17,7 +17,11 @@ class WeatherHomeViewModel @Inject constructor(
     private val _weatherHomeUiState = MutableStateFlow<Resource<Any>?>(null)
     val forecastWeatherUiState: StateFlow<Resource<Any>?> = _weatherHomeUiState
 
-    fun getForecastWeather() = viewModelScope.launch {
+    init {
+        getForecastWeather()
+    }
+
+    private fun getForecastWeather() = viewModelScope.launch {
         _weatherHomeUiState.value = Resource.Loading()
 
         val result = forecastWeatherUseCase.getForecastWeather("VietNam", 3, "", "")

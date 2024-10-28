@@ -8,8 +8,8 @@ class BaseHeadersInterceptor : Interceptor {
         val request = chain.request().newBuilder().apply {
             header("AppId", "1")
             header("Platform", "Android")
-            header("X-RapidAPI-Key", BaseURL.apiKey)
-            header("X-RapidAPI-Host", BaseURL.host)
+            header("x-rapidapi-key", BaseURL.apiKey)
+            header("x-rapidapi-host", BaseURL.host)
         }.build()
         return chain.proceed(request)
     }

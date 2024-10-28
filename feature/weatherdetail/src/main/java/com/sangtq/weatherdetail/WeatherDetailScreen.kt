@@ -144,10 +144,6 @@ fun WeatherDetailRoute(modifier: Modifier = Modifier, onClickBack: (() -> Unit)?
         }
     }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.getWeatherDetail()
-    }
-
     LaunchedEffect(key1 = weatherHomeSate) {
         if (weatherHomeSate.location != null) {
             hourNow.intValue = convertEpochToHour(weatherHomeSate.location?.localtime_epoch ?: 0)
@@ -402,6 +398,13 @@ fun DetailWeatherToday(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = contentDescription,
+                modifier = modifier,
+                contentScale = ContentScale.Crop // Adjusts how the image is scaled
+            )
+            AsyncI
             Image(
                 painter = painterResource(id = R.drawable.ic_weather_heavy_rain),
                 contentDescription = null

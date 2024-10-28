@@ -149,10 +149,6 @@ fun WeatherHomeRoute(modifier: Modifier = Modifier, openWeatherDetail: (() -> Un
         }
     }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.getForecastWeather()
-    }
-
     LaunchedEffect(key1 = weatherHomeSate) {
         if (weatherHomeSate.location != null) {
             hourNow.intValue = convertEpochToHour(weatherHomeSate.location?.localtime_epoch ?: 0)
